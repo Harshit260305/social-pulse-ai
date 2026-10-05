@@ -1,0 +1,9 @@
+streamlit
+fastapi
+langchain
+transformers
+bertopic
+shap
+praw
+plotly
+mlflow
