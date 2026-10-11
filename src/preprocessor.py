@@ -2,8 +2,10 @@ import pandas as pd
 import re
 
 def clean_text(text):
-    if text is None:
+    if pd.isna(text):
         return ""
+
+    text = str(text)
     
     text = re.sub(r"https?://\S+", "", text)
 
@@ -19,3 +21,8 @@ def clean_text(text):
 def preprocessed_dataframe(df):
     df["full_text"] = df["full_text"].apply(clean_text)
     return df
+
+
+sample = "  Python <b>is amazing</b>!!! https://example.com  "
+
+print(clean_text(sample))
