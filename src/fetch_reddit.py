@@ -29,5 +29,5 @@ def save_data(df, path):
     df.to_csv(path, index=False)
 
 if __name__ == "__main__":
-    df = fetch_raw_data("datascience", 10)
-    save_data(df, "data/raw_posts.csv")
+    df = fetch_raw_data("datascience", 100)
+    save_data(df, "data/raw_posts_large.csv")

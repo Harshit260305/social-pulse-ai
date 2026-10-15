@@ -1,0 +1,607 @@
+created_utc,id,num_comments,score,selftext,subreddit,title
+1791809053,1x40v97,0,1,,datascience,We ran some benchmarks comparing Jev against ML/sklearn
+1791791279,1x3vs98,0,1,"Routing a ticket or a claim to the right queue is a classification problem. Using an autoregressive LLM for it means paying for decoding, parsing JSON that sometimes breaks, and getting no real statement about how often it is right. A small encoder with conformal prediction gives you prediction sets with a coverage rate you can actually state, such as 95%, and you only escalate to an LLM when the set is ambiguous.
+
+Found a workshop on Oct 30 that builds exactly this on CPU as one case study.
+
+Covers:
+
+* Why generative routing is an engineering anti pattern, and how to separate vector scoring from state execution
+* Zero shot and few shot routing with ModernBERT, LFM2.5 Encoder and SetFit
+* Split conformal prediction to turn raw logits into sets with guaranteed coverage
+* Idempotent LangGraph execution with human approval gates and compensation handlers
+* Evaluation with Wilson score intervals and clustered standard errors instead of a naive pass rate
+
+Led by Ben Auffarth, who has 15+ years across machine learning and large scale decision systems. It sits at an intermediate level, so some Python and transformer familiarity is assumed. 
+
+Full details and the agenda are in comments",datascience,"Most production “AI agents” are classifiers with extra steps, and a classifier can give you guarantees"
+1791777672,1x3rz35,0,1," 
+
+Welcome to this week's entering & transitioning thread! This thread is for any questions about getting started, studying, or transitioning into the data science field. Topics include:
+
+* Learning resources (e.g. books, tutorials, videos)
+* Traditional education (e.g. schools, degrees, electives)
+* Alternative education (e.g. online courses, bootcamps)
+* Job search questions (e.g. resumes, applying, career prospects)
+* Elementary questions (e.g. where to start, what next)
+
+While you wait for answers from the community, check out the [FAQ](https://www.reddit.com/r/datascience/wiki/frequently-asked-questions) and Resources pages on our wiki. You can also search for answers in [past weekly threads](https://www.reddit.com/r/datascience/search?q=weekly%20thread&restrict_sr=1&sort=new).",datascience,"Weekly Entering & Transitioning - Thread 12 Oct, 2026 - 19 Oct, 2026"
+1791739466,1x3dyqu,23,92,"The images below map the 4 types of data science case study questions I encountered across 80+ interview rounds at 16 companies in April-May 2026. For each type it covers the interviewers' typical opening, what's being tested, and the trap I saw most often in my own interviews and in mock interviews with clients. Identifying the type early matters because the correct approach differs for each one.   
+  
+A few years ago the case study round was close to synonymous with marketplace experimentation. That question still regularly appears, but the same loop can now hand you (1) a launch evaluation, (2) a root cause analysis of a metric that suddenly moved, (3) an opportunity sizing decision about whether a build is worth its cost, or (4) a targeting problem that turns on heterogeneous treatment effects. Any of the four can also end with questions that call for observational causal inference, depending on your level. 
+
+(I created this for my socials, but hopefully it fits the Reddit structure!) 
+
+https://preview.redd.it/kgtoxgbtgvuh1.png?width=2160&format=png&auto=webp&s=8601b235981b693ee3159fdd6dfa02fc97028201
+
+https://preview.redd.it/y7wdxfbtgvuh1.png?width=2160&format=png&auto=webp&s=2c193599b5263fc4f95c775a01de602f1a9808e6
+
+https://preview.redd.it/8qmm3gbtgvuh1.png?width=2160&format=png&auto=webp&s=e9315dbfcfdf9db67b589a4822cf2f31db3fd4df
+
+https://preview.redd.it/2s90hfbtgvuh1.png?width=2160&format=png&auto=webp&s=020ca9d76d424a6cf12df34a8b097573f998cde7
+
+https://preview.redd.it/mvqzrfbtgvuh1.png?width=2160&format=png&auto=webp&s=c580407e5919bbd0a68d067112e4f390085b606d
+
+https://preview.redd.it/toy8zgbtgvuh1.png?width=2160&format=png&auto=webp&s=8230bb4081d697050f9aa54dccff8f530fef278b
+
+",datascience,4 Types of Case Studies in 2026 Data Science Interviews
+1791663504,1x2oz7f,0,1,[removed],datascience,Amazon L5/L6 Data Science Coding Interview Prep?
+1791651675,1x2ka9d,2,7,,datascience,"Thinking more seriously about the design of exploratory studies, a manifesto"
+1791645747,1x2hxb9,16,51,"Sharing this blog, that compiles some real world examples of Causal Inference being applied to provide answers to otherwise ‘unanswerable’ questions.
+
+My hope is that the examples make the methods  clearer, particularly among those new to the field. Happy reading.[https://medium.com/@joshamayo7/what-would-have-happened-otherwise-causal-inference-in-practice-b412d2b4e3f7](https://medium.com/@joshamayo7/what-would-have-happened-otherwise-causal-inference-in-practice-b412d2b4e3f7)",datascience,Causal Inference Real World Case Studies
+1791641253,1x2g6zw,0,1,[removed],datascience,"The yearly Europe-centric thread (2026): your role, your interactions, and (of course) your salary"
+1791632545,1x2d8jb,1,1,[removed],datascience,"I ran a pre-registered reproducibility audit on 5 randomly drawn papers with R/Python code on Harvard Dataverse. Batch 1 results, critique welcome"
+1791584858,1x1ywq5,4,3,"Quite a few real world data problems look like this: many related time series, few noisy readings, and long gaps. Local price indices, sensor networks, or small area stats.
+
+I built a small PyTorch model to estimate a smooth underlying level for every location, day, and target even where nothing was observed.
+
+Key ideas:
+
+Mask, don’t drop missing targets in the loss
+
+Weight observations by how many raw readings they average
+
+Share information across locations (area + station offsets) and across related targets (joint heads)
+
+Enforce smoothness with a curvature penalty over the full time grid, including gaps
+
+I tested it on hourly PM2.5/PM10 from 12 Beijing stations, thinned to a sparse panel, and scored against the full data’s 31day moving average.
+
+What I found:
+
+The network fills long gaps and very sparse stations far better than smoothing each series on its own
+
+Modelling both pollutants together recovers a completely dropped series (PM10 at one station) from its PM2.5
+
+But elsewhere, sharing across targets costs a little accuracy vs. modelling each pollutant alone
+
+A simple ±15day mean is hard to beat when data is dense. The network’s smooth time curve misses shared daily shocks
+
+Writeup with code, figures, and results:
+
+[https://prteek.github.io/regression\_room/posts/beijing\_air\_quality/](https://prteek.github.io/regression_room/posts/beijing_air_quality/)",datascience,"Sparse panel data, a small experiment"
+1791584535,1x1ysch,0,1,[removed],datascience,"Sparse panels, missing targets, and smoothing: a small PyTorch experiment"
+1791570814,1x1t5a9,1,1,[removed],datascience,Are .ipynb notebooks already outdated in the agentic era?
+1791565806,1x1qzk7,1,1,[removed],datascience,Seeking advice on the next research direction for an emergency landing site segmentation project
+1791565791,1x1qzct,1,1,[removed],datascience,"Love DS, but terrified of one requirement..."
+1791562672,1x1pn4b,1,1,,datascience,Data Scientist Job Search in 2026
+1791562642,1x1pmoo,10,234,,datascience,"Polars 2.0 released with the streaming engine, out-of-core processing and first-class SQL support"
+1791560886,1x1ouku,1,1,[removed],datascience,LLM data provenance
+1791560556,1x1opiv,1,1,[removed],datascience,LLMs illegal?
+1791560513,1x1oov6,1,1,,datascience,Data Science with Python Recommendation
+1791559769,1x1odjw,1,1,[removed],datascience,Built an open source tool to parse live job postings for actual tech stack requirements and salary percentiles
+1791559284,1x1o668,1,1,,datascience,Evaluate a dataset for commercial value
+1791554297,1x1m31n,1,1,[removed],datascience,👋Welcome to r/BrandAnalytics
+1791553924,1x1lxoo,1,1,[removed],datascience,"Has Anyone Successfully Found Remote, Part-Time Data Science or Analytics Projects?"
+1791553163,1x1lmrb,0,1,[removed],datascience,📚✨ Want to read Data Visualization Made Easy for FREE with Libby and your local library? 📊📖
+1791548533,1x1jxmc,1,1,[removed],datascience,I’m a macroeconomist who used AI to build two research apps for the iPhone
+1791290160,1wz1gir,37,55,"How do you choose between causal inference models when you can never see the true effect? Model selection is well documented in machine learning, but it often gets skipped in causal inference work. Doing it well is one of the things that separates senior and staff-level data scientists from more junior ones.
+
+I simulated two years of weekly bookings for 40 regions, five of which received a treatment on the date marked by the red vertical line. Because I generated the data, I know the ground truth: the treatment increased bookings in those five regions by exactly 10%. With five treated regions and 35 untreated ones, two natural options are synthetic control and difference-in-differences, though there are others.
+
+Code in colab and explanatory video, free and ungated: [https://whatstheimpact.com/learn-causal-inference/](https://whatstheimpact.com/learn-causal-inference/) 
+
+When I gave Claude Code free rein on this data, it built its whole analysis around difference-in-differences where it found a 24% increase, more than double the true effect. To its credit, it flagged that the pre-treatment trends weren't parallel, but it never tested whether a different model would be more accurate.
+
+Importantly, Claude skipped an A/A test, sometimes called a placebo test. You take only the data from before the real treatment, pretend the treatment started three months earlier, and randomly picked five regions (for consistency) to call ""treated."" Because nothing actually happened in that window, the true effect is zero. That means any effect the model reports there is pure estimation error, and I repeated this for 500 draws for each model to see the full spread.
+
+For difference-in-differences, 90% of the placebo estimates landed between -14% and +10%. The RMSE, which measures how far the estimates typically land from the true answer of zero, was 7.6 percentage points. Synthetic control on the exact same placebo draws was much tighter, with 90% of estimates landing between -7% and +9%. Its RMSE dropped to 4.9 points, more than a third lower than difference-in-differences.
+
+The outcome you model is a choice too, so I also ran synthetic control on bookings per 1,000 people instead of raw bookings. Putting every region on the same scale helps the model track the treated regions more closely before treatment, and the RMSE fell a bit further to 4.4 points.
+
+Sure enough, the real treatment period lines up with that ranking: synthetic control estimates 7% on raw bookings and 9.6% per 1,000 people, both much closer to the true 10% than the 24% from difference-in-differences. With one simulated dataset, I wouldn't read much into the small gap between the two synthetic control versions or claim that synthetic control always wins. What carries over is the workflow: in real work you never see the ground truth, but you can usually run this A/A test on whatever models you're considering before trusting one.",datascience,Model Selection Technique for Causal Inference
+1791220322,1wye7dw,1,1,,datascience,"Please Please Please do not get a Data Science degree, even if you want to be a Data Scientist"
+1791218774,1wydj55,1,1,,datascience,Incoming Google DS-R interview — what to expect?
+1791218055,1wyd82r,1,1,[removed],datascience,Data Science Online course
+1791216119,1wycdb8,1,1,,datascience,Maximum Likelihood Monday
+1791211130,1wya8n4,1,1,[removed],datascience,Incoming Google DS-R interview — what to expect?
+1791207416,1wy8roy,1,1,[removed],datascience,Why Is Ridge Giving Large Negative Coefficients?
+1791206993,1wy8luj,1,1,[removed],datascience,A Library for Exploring Predictive Multiplicity in OLS Regression
+1791196988,1wy5b9t,2,1,[removed],datascience,Backtesting an ensemble model's picks against a public benchmark for 5 straight weeks — sharing the validation numbers and the one gap it exposed
+1791172871,1wxyyo7,9,5," 
+
+Welcome to this week's entering & transitioning thread! This thread is for any questions about getting started, studying, or transitioning into the data science field. Topics include:
+
+* Learning resources (e.g. books, tutorials, videos)
+* Traditional education (e.g. schools, degrees, electives)
+* Alternative education (e.g. online courses, bootcamps)
+* Job search questions (e.g. resumes, applying, career prospects)
+* Elementary questions (e.g. where to start, what next)
+
+While you wait for answers from the community, check out the [FAQ](https://www.reddit.com/r/datascience/wiki/frequently-asked-questions) and Resources pages on our wiki. You can also search for answers in [past weekly threads](https://www.reddit.com/r/datascience/search?q=weekly%20thread&restrict_sr=1&sort=new).",datascience,"Weekly Entering & Transitioning - Thread 05 Oct, 2026 - 12 Oct, 2026"
+1791141065,1wxnuc8,18,21,"Looking to hear about your own company's work practices to compare to my own.  I'm much more familiar with Azure, so I'm going to use that terminology, but I assume everything is basically the same for AWS.
+
+Can you go into the Azure Portal and just click ""create"" for, say, a SQL Server or App Service and configure it through the Portal GUI?
+
+Or do you need to request and configure through configuration files?  Can you freely commit architecture config files (""architecture as code"") to create the Azure components in Dev?
+
+Or is it even more locked-down and hands-off?  Required to submit paperwork requests to an Architecture team?",datascience,What's the process to request cloud architecture in your company?
+1791055528,1wwvnlm,0,1,[removed],datascience,Pretrained Deep Learning Intent Signals for Mobile DSPs
+1790956473,1wvxffm,0,23,,datascience,"A nonlinear effect plus measurement error in x becomes close to linear, a simulation study"
+1790921699,1wvmcxr,48,18,"I recently got an Andrew Ng course on Coursera for generative ai.
+
+I'm planning to study everyday and get it finished, then move on to other courses as I wish to become a data scientist/ Ai engineer.
+
+The doubt I have is, how do people study from such online courses. Am i supposed to take notes from every lecture.
+
+Or write only important points?
+
+This is what I used to do till now:
+
+Take the transcription of a lecture. Give it to an ai and ask it to create notes so I can read them and understand the topic really well even in the future if I were to revise. So i ask it to add important stuff if the lecture missed anything important and covered only vaguely. I ask it to make sure I also become interview ready for the topic. Then i write it down in a  notebook because I feel I learn better when I am reading something I wrote on paper (weird maybe but yeah)
+
+To me this seems good but the problem is this leads to 3-5 pages minimum per lecture even for just a 10-15 minutes lecture. And there could be hundreds of lectures in these online courses.
+
+So i may have really dense notes covering all the important stuff, but then these become too long and time consuming, and i don't know if this is a right method to study.
+
+Need help/ advice that how do people make sure that they remember what they are studying and how would you revise it later. Ofcourse notes maybe but how to make proper notes efficiently, so it isn't a waste of time and not too dense on unimportant topics because in my case the AI will give 3-5 pages even for a simple topic and I may not always be able to differentiate or identity whether a topic is unimportant and doesn't require so long notes",datascience,How does everyone study efficiently in the field
+1790823437,1wuoecq,0,1,[removed],datascience,The offers you rejected are part of the modeling problem (selection bias in deal menus)
+1790819380,1wun20n,1,1,[removed],datascience,"Eight Reddit comments, two firsthand accounts: the denominator problem in LLM-assisted product research"
+1790791588,1wuc5j5,1,10,"Hello all,
+
+I built a radar object classifier on RadarScenes, extending a prior single-scan classifier to accumulate observations over a tracked object's history instead of classifying each scan in isolation.
+
+A single RadarScenes object instance contains only about 2.9 radar points on average, very sparse. A single scan also can't capture temporal characteristics: RCS and micro-Doppler both vary continuously as an object moves. Pedestrians produce characteristic micro-Doppler from limb motion; different object classes show different RCS fluctuation patterns as aspect angle and scattering geometry change scan to scan. Accumulating observations gives both higher point density and provides temporal dynamics.
+
+Baseline: a DeepReflecs encoder (Ulrich, Glaser & Timm, RadarConf 2021), PointNet style, per point shared weights, on single scans across car, large\_vehicle, two\_wheeler, pedestrian, pedestrian\_group: 0.7370 macro F1.
+
+Using RadarScenes' persistent \`track\_id\`, I build a causal, N=20, per track sliding-window buffer:
+
+- x\_seq/y\_seq: Global, odometry-corrected coordinates recentered per scan on the object centroid. Unlike x\_cc/y\_cc (car-frame coordinates that accumulate over time to form a trajectory).
+
+- Cross sensor buffer: whichever of the 4 sensors currently observe the track push to the same buffer.
+
+- Stride 1, causal: every new scan updates the buffer and produces a prediction. No future context, real time streaming compatible.
+
+- Each scan is encoded once by a frozen per scan encoder and cached
+
+- Fusion concatenates the causal GRU's hidden state (order aware) with an order-invariant pooled embedding (all N scans' points as one set, no sequence structure) through a small trained mlp head.
+
+Results
+N=20, all 4 sensors
+
+Model	Macro F1	Delta
+Single scan	0.7370	(baseline)
+20 scan point pooling	0.8613	+0.1243
+Causal GRU	0.8895	+0.0282 over pooling
+GRU + pooled embedding (fusion)	0.8897	+0.0002 over GRU, noise
+Pooling alone, no sequence model, no notion of scan order at all, recovers +0.1243 macro F1. The GRU adds a real but much smaller +0.0282 on top. Fusion adds nothing measurable beyond the GRU.
+
+Ablation
+
+Llarger GRUs, a Transformer, a state space model, point level self attention, all trained on the exact same frozen per scan embeddings, land inside a 0.86 to 0.89 band, a 0.03 spread. End to end fine tuning of the frozen encoder makes things slightly worse (about -0.002 to -0.003), not better.
+
+Conclusion
+
+So, in this setup, most of the improvement comes from accumulating more radar returns rather than from the choice of sequence model. Once the per-scan embedding is fixed, none of the sequence-models tested changes macro F1 by more than \~0.003 beyond the pooled representation.
+
+That does not necessarily mean that temporal ordering contains no useful information. Rather, it suggests that the current per-scan representation and sequence models are not extracting much additional discriminative signal.
+
+For this reason, the results suggest that improving the point-level/per-scan representation may be a more promising direction than further searching over sequence architectures.
+
+Full report, every ablation, confusion matrix, coordinate frame reasoning: [https://github.com/brunopinto900/radar-ml-autonomous-driving/blob/track-accumulation/final\_report.md](https://github.com/brunopinto900/radar-ml-autonomous-driving/blob/track-accumulation/final_report.md)
+
+Thank you.",datascience,Multi scan radar object classification on RadarScenes
+1790788369,1wuapd4,34,65,"I’m an MS Data Science student interested in learning more about spatial data and GIS. I’m currently working on a geospatial crime analysis project in R and taking Esri’s Spatial Data Science MOOC.
+
+I’m also interviewing for a year-long data science internship at a credit union that focuses on geospatial data. I’ve noticed that the largest utility company in my state also hires data scientists with geospatial/GIS knowledge, which has made me curious about opportunities in this area across different industries.
+
+It’s not a specialization that’s discussed here often. For those who work with spatial data, what industry are you in, what does your day-to-day work involve, and do you enjoy it? What has your experience been with demand for these skills?",datascience,Anyone specialize in geospatial data?
+1790784808,1wu9424,7,63,,datascience,"Bayesians are frequentists, Andrew Gelman on how the prior plays the role of the frequentist sample space"
+1790695895,1wtd9pu,4,1,"Prior to running machine learning modeling, I'd like to compress my under-sampled training data (X\_train\_under) that contains multiple sparse binary 0/1 columns as well as numerical (float) data.
+
+Converting the binary columns to sparse format (Sparse\[int64, 0\]) works great:
+
+    # Identify binary int64 columns (columns containing only 0 and 1)
+    binary_int_cols = []
+    for col in X_train_under.select_dtypes(include=[""int64""]).columns:
+        if set(X_train_under[col].unique()).issubset({0, 1}):
+            binary_int_cols.append(col)
+    
+    # Change identified binary columns into Sparse format (using 0 as fill value)
+    for col in binary_int_cols:
+        X_train_under[col] = X_train_under[col].astype(pd.SparseDtype(int, fill_value=0))
+    
+    print(""\n--- Data Types After Conversion ---"")
+    print(X_train_under.dtypes)
+
+However when I attempt to separate & compress the sparse format columns and recombine with the numerical columns:
+
+    from scipy.sparse import csr_matrix
+    
+    # Separate sparse and dense columns
+    sparse_df = X_train_under.select_dtypes(include=['Sparse'])
+    dense_df = X_train_under.select_dtypes(exclude=['Sparse'])
+    
+    # Perform compression operation on sparse columns
+    compressed_sparse = sparse_df.sparse.to_coo().tocsr() 
+    
+    # Downcast dense numeric columns separately
+    for col in dense_df.columns:
+        dense_df[col] = pd.to_numeric(dense_df[col], downcast='integer')
+    
+    # Recombine into single data frame
+    X_train_under_sparse_csr = pd.concat([dense_df, sparse_df], axis=1)
+    
+
+I get the following error:
+
+    ---------------------------------------------------------------------------
+    AttributeError                            Traceback (most recent call last)
+    Cell In[40], line 8
+          5 dense_df = X_train_under.select_dtypes(exclude=['Sparse'])
+          7 # Perform compression operation on sparse columns
+    ----> 8 compressed_sparse = sparse_df.sparse.to_coo().tocsr() 
+         10 # Downcast dense numeric columns separately
+         11 for col in dense_df.columns:
+    
+    File ~\AppData\Roaming\Python\Python312\site-packages\pandas\core\generic.py:6321, in NDFrame.__getattr__(self, name)
+       6314 if (
+       6315     name not in self._internal_names_set
+       6316     and name not in self._metadata
+       6317     and name not in self._accessors
+       6318     and self._info_axis._can_hold_identifiers_and_holds_name(name)
+       6319 ):
+       6320     return self[name]
+    -> 6321 return object.__getattribute__(self, name)
+    
+    File ~\AppData\Roaming\Python\Python312\site-packages\pandas\core\accessor.py:224, in CachedAccessor.__get__(self, obj, cls)
+        221 if obj is None:
+        222     # we're accessing the attribute of the class, i.e., Dataset.geo
+        223     return self._accessor
+    --> 224 accessor_obj = self._accessor(obj)
+        225 # Replace the property with the accessor object. Inspired by:
+        226 # https://www.pydanny.com/cached-property.html
+        227 # We need to use object.__setattr__ because we overwrite __setattr__ on
+        228 # NDFrame
+        229 object.__setattr__(obj, self._name, accessor_obj)
+    
+    File ~\AppData\Roaming\Python\Python312\site-packages\pandas\core\arrays\sparse\accessor.py:31, in BaseAccessor.__init__(self, data)
+         29 def __init__(self, data=None) -> None:
+         30     self._parent = data
+    ---> 31     self._validate(data)
+    
+    File ~\AppData\Roaming\Python\Python312\site-packages\pandas\core\arrays\sparse\accessor.py:249, in SparseFrameAccessor._validate(self, data)
+        247 dtypes = data.dtypes
+        248 if not all(isinstance(t, SparseDtype) for t in dtypes):
+    --> 249     raise AttributeError(self._validation_msg)
+    
+    AttributeError: Can only use the '.sparse' accessor with Sparse data.
+
+  
+I don't know what this means - I've already converted my binary 0/1 columns to Sparse datatype.
+
+What am I doing wrong?",datascience,Error messages trying to compress sparse data in Python
+1790686949,1wt9j72,1,1,,datascience,"[p] Open-access fine-tuning data for AI reasoning models, via a single URL"
+1790659608,1wt1mnv,1,0,[removed],datascience,MLE interviews test 3 things LeetCode alone won't cover
+1790638213,1wsue83,14,19,Hii everyone. I am sole DS in a relatively mid sized retail business. I am okayish versed in A/B testing and building on it. I went looking for opportunities and the e-commerce team told me that they are not sure what to experiment in the first place. How can I approach this problem as I went with the impression that I can delve into the maths of A/B test. At this point I am thinking of recommending UI/UX researcher and product owners who can create this backlog by looking at trends from competitors. Has anyone faced something similar before ? How did you navigate? TIA :),datascience,How to be better in identifying A/B testing opportunities
+1790568076,1ws4fwo,3,6," 
+
+Welcome to this week's entering & transitioning thread! This thread is for any questions about getting started, studying, or transitioning into the data science field. Topics include:
+
+* Learning resources (e.g. books, tutorials, videos)
+* Traditional education (e.g. schools, degrees, electives)
+* Alternative education (e.g. online courses, bootcamps)
+* Job search questions (e.g. resumes, applying, career prospects)
+* Elementary questions (e.g. where to start, what next)
+
+While you wait for answers from the community, check out the [FAQ](https://www.reddit.com/r/datascience/wiki/frequently-asked-questions) and Resources pages on our wiki. You can also search for answers in [past weekly threads](https://www.reddit.com/r/datascience/search?q=weekly%20thread&restrict_sr=1&sort=new).",datascience,"Weekly Entering & Transitioning - Thread 28 Sep, 2026 - 05 Oct, 2026"
+1790525177,1wro1iw,1,46,,datascience,DuckDB can now query Hugging Face datasets directly where they are hosted
+1790524139,1wrnl6t,1,1,[removed],datascience,We turned our AI scheduler off. The metrics went backward.
+1790522939,1wrn391,1,1,,datascience,Designing a multi-scale biophysical & agent simulation (SIMONE). Looking for advice and Julia collaborators.
+1790387215,1wqe3k1,7,6,"Data science coding rounds are dramatically changing, with AI-assisted pair programming replacing closed-book challenges at many companies including Meta, Shopify, Adobe, and Google on the way. So, what should you expect in a coding round when you can use AI?
+
+\[Ungated video and Colab notebook: https://whatstheimpact.com/free-resources/\]
+
+I've found that these coding rounds shifted away from tests on syntax and are now more about problem solving, almost like a mini case study that instead of just saying aloud what you might do...you actually do it.  
+  
+I mocked up an example of the types of AI coding round challenges that I faced while interviewing in Spring 2026 and shared the video breakdown and accompanying notebooks for replication in the Resources tab of my website linked above.  
+
+\*\*All for free, no signups, no downloads, nothing gated, just a video and a Colab link.\*\*",datascience,AI Assisted Data Science Coding Challenges
+1790376115,1wqa6cv,0,1,,datascience,Meta DS vs Director role at a small analytics firm
+1790342697,1wpwag3,44,50,"I've spent years on a stream-aligned data team where “own the outcome” is the real expectation, not just a value on a slide. I actually love that life. Mainly because I can usually see the impact of my work within the same sprint (or the next one). That feedback loop is addictive.
+
+I’ve also worked on classic enabler-style teams that shipped almost nothing, got labeled the ivory tower, or spent their time on POCs and nice-to-have features that kept getting deprioritized. Those teams did give me space for deeper statistical work that a stream-aligned team rarely has time for. So I’m not claiming stream-aligned is obviously better. I’ve seen the good and the bad on both sides.
+
+Of course I’m not doing true solo end-to-end ownership. There are dedicated engineering, product, and platform people involved. Still, the DS role consistently ends up expected to move across all of it: framing the product problem, data pipelines, modeling, delivery trade-offs, enough production engineering to get by, and then checking whether the thing actually moved a number.
+
+Some days that feels like the job working as intended. You’re the connective tissue and that’s genuinely valuable. Other days it feels like “ownership” is just the polite word for absorbing coordination work, or worse, covering for understaffing. That’s when I catch myself wondering: why me? Why does this land on the DS by default rather than anyone else on the team?
+
+Genuinely curious what this sub thinks:
+
+\- Where’s the line between “senior DS who understands the whole system” and “DS who’s quietly doing everyone’s job at the seams”?
+
+\- Is the DS role naturally the one that owns the connections between product, data, and engineering, or is that just something that keeps landing on me?
+
+\- Are there stream-aligned data scientists here who don’t feel this same breadth of responsibility? What does your setup look like?
+
+\- Or is full ownership just what seniority means now?
+
+I ended up writing a longer piece working through all of this from my own experience (link below), mostly to get my thoughts straight. But I’m much more interested in whether this matches what other people have actually lived. Tell me where I’m off base.
+
+https://medium.com/adeo-tech/full-stack-data-scientist-stream-aligned-team-4aa05d19bc69",datascience,"Is ""end-to-end ownership"" actually good for Data Scientists, or is it just unpaid glue work with a nicer name?"
+1790270499,1wp7r8k,22,31,"I’ve been thinking about making a move to the DC area. I know there are a ton of opportunities in the government sector, but I haven’t come across many Data Scientists who work in government.  
+For those of you who do, what are the pros and cons of working as a DS in the government sector? I’d especially be interested in hearing about the work itself, compensation, career growth, work-life balance, and how it compares to working in the private sector.",datascience,"People who work in the government, how has your experience been?"
+1790261873,1wp3x36,1,0,[removed],datascience,"Notes on a local NL2SQL assistant against real databases: schema selection, valid but wrong SQL, read-only"
+1790198833,1woisl1,23,18,"Currently in the job market as an experienced Data Scientist generally targeting Senior/Staff roles that span Data Scientist/Applied Science/MLE. I have an MS in Stats, so one thing I've generally focused on during my interviews prep is overindexing on coding and ML specifically leetcode. This has me taking the Stats portion of interviews for granted and it's causing a blindspot for interviews I would consider ""not as crisp"" as I'd like them to be. 
+
+What I find is generally I know the conceptual definition of a lot of things and a lot of breadth and how to connect that back to the business, but will have random gaffs on things I've forgotten or being able to go one layer deeper on the spot. Don't use on the job or haven't used in depth since Grad school. Things that aren't hard but my mind just goes blank for some reason in an interview setting. Common examples can be things such as forgetting the name of probability distributions, confidence interval calculations for proportions, formula's for power analysis as opposed just know the inputs, etc. Sometimes it's also tricky just to understand WHAT an interviewer is driving towards and not going off on a tangent in a complete opposite direction. 
+
+  
+I use LLM's extensively but I find that sometimes if the convo goes on too long they get ""stuck"" kinda repeating the same questions and same themes instead of exploring other stuff. 
+
+  
+Curious how you all prepare for Statistics interviews and if there are good resources for full coverage to prevent some of what I talked about? ",datascience,Any advice for good Stats Interview Prep?
+1790175697,1wo8fhr,23,0,"**1. Basic prep work gets labeled ""analysis paralysis.""**
+
+Asking where the data lives, who owns the problem, or what baseline we’re trying to beat isn't overthinking. It’s common sense. When a manager blows past all of that, they aren’t “moving fast and breaking things” they’re just pushing all the risk onto you.
+
+**2. ""Build it first, we’ll sell it to the users later.""**
+
+People on the ground (analysts, reviewers, ops folks) don’t reject internal tools because the internal PR was bad. They reject them because the tool messes up their day, creates more work, or blows up on edge cases they deal with every single day.
+
+**3. If the boss had the idea, nobody is allowed to question it.**
+
+An idea from a VP or CIO gets greenlit instantly, no matter how half-baked. If you point out that machine learning isn't even the right tool, you get branded as disloyal. So the team spends six months building something completely pointless just to flatter an executive.
+
+**4. Zombie projects beat dead projects.**
+
+In a sane company, killing a bad project on day three is a win because it saves time and money. In a corporate theater company, a project that never finishes is actually useful—it gives management something to put on slides, justify head count, and demo every quarter.
+
+**5. Slide decks and quick prototypes count as ""success.""**
+
+Nobody actually cares about uptime, latency, drift, or whether the model saved a dime. As long as leadership smiles at a demo and there are screenshots for a slide deck, the project is treated like a massive success.
+
+**6. Pointing out real technical problems is treated as an ""attitude issue.""**
+
+Bring up messy data, crazy compute costs, or lack of pipeline support, and suddenly the conversation isn't about the tech anymore it's about you. *""Why are you so negative?"" ""You need to be a team player."" ""Focus on the art of the possible.""* It's just a way to shut down facts they can't answer.
+
+**7. ""Go find your own problem"" instead of actual strategy.**
+
+Being told to ""just figure something out"" isn't real autonomy. It’s management dumping their job on you. They expect you to find an owner, beg for data, define KPIs, and convince people to use it—all without giving you any actual authority to get it done.
+
+**8. Forcing a massive model where simple logic would do.**
+
+Spending four months fine-tuning an LLM or training a neural net for something a basic SQL query or five `if/else` statements could solve by lunch, just so management can brag that they’re “leveraging cutting-edge AI.”
+
+**9. The users smile in meetings, but commit zero budget or time.**
+
+The target business team nods along politely in sprint demos, but they haven't assigned a single person to help test it, haven't budgeted for maintenance, and have no plan to change their daily routines. If nobody commits real resources to run it, you're building shelfware.
+
+**10. The manager takes the credit early; you take the hit late.**
+
+Your manager gets all the glory on day one by promising leadership the moon. When the whole thing quietly fizzles out eighteen months later because the idea was fundamentally flawed, they blame it on ""shifting company priorities,"" while you're left looking like the one who wasted time and didn't deliver.
+
+My best advice is to stop trying to save the company from bad ideas: say ""yes"" to keep the political heat off your back, immediately shift the friction onto external blockers you don't control, document everything quietly in writing to protect yourself when the project stalls, and use the wasted time to sharpen your own technical skills for an organization that actually wants to ship real solutions. ",datascience,Spotting the Red Flags of Executive AI & ML Theater: A Survival Guide for Builders
+1790089738,1wnc4cf,1,1,,datascience,Adaptive reranking with Jev and a logistic regression
+1790089717,1wnc419,1,1,[removed],datascience,https://prospex.ch/blog/adaptive-reranking-with-jev-and-a-logistic-regression/
+1790082646,1wn93iz,5,38,"We're open-sourcing **FlexViz**: a library for **fast, interactive exploration of very large datasets**, built to be **agent-native**. 
+
+Repo: [https://github.com/flex-analytics/flexviz](https://github.com/flex-analytics/flexviz)  
+Live demo: [https://flexviz.tech/demo](https://flexviz.tech/demo)
+
+A few years ago we had the pleasure to open-source plotly-resampler. The goal of this tool was to make in-memory line chart visualization scalable. Since then, we've had over 18M installs, and received a huge amount of feedback from people using it in practice. FlexViz is what we built from those lessons.
+
+It is a free, open-source library and improves in many aspects over plotly-resampler:
+
+* **Out-of-core**: in FlexViz we can keep the data lazy (i.e., not in memory) and stream the data from disk to ram → allows visualizing larger-than-ram datasets
+* **Faster aggregation**: line chart of 1 billion data points in 0.25s. Fastest of all tools benchmarked.
+* **10 trace types**: line, hist1d, hist2d, bar, treemap, …
+* **Native cross-filtering**: brush one visualization and the others update live
+* **Rearrangeable grid**
+* **Stateless server architecture**
+
+
+
+But the biggest change: **FlexViz is agent-native**. In FlexViz everything is a spec, allowing true agentic co-exploration of your data (+ url sharing of your live view). The agents can conveniently create, follow along, and update the interactive visualization, without taking any screenshots it knows your exact view → **the interactive visualization itself becomes a communication surface between human and agent**.
+
+
+
+Our goal with FlexViz is to make large data visualization / exploration both convenient for humans and native to AI agents.
+
+",datascience,"FlexViz: 1 billion data points, interactive exploration, in 0.25s"
+1790076993,1wn714t,1,1,[removed],datascience,Spain: free tech/data job fairs in Málaga & Alicante (15 Oct) — anyone going?
+1789986940,1wm9465,24,517,,datascience,True reason to be a Data Scientist
+1789963272,1wm24l1,4,4," 
+
+Welcome to this week's entering & transitioning thread! This thread is for any questions about getting started, studying, or transitioning into the data science field. Topics include:
+
+* Learning resources (e.g. books, tutorials, videos)
+* Traditional education (e.g. schools, degrees, electives)
+* Alternative education (e.g. online courses, bootcamps)
+* Job search questions (e.g. resumes, applying, career prospects)
+* Elementary questions (e.g. where to start, what next)
+
+While you wait for answers from the community, check out the [FAQ](https://www.reddit.com/r/datascience/wiki/frequently-asked-questions) and Resources pages on our wiki. You can also search for answers in [past weekly threads](https://www.reddit.com/r/datascience/search?q=weekly%20thread&restrict_sr=1&sort=new).",datascience,"Weekly Entering & Transitioning - Thread 21 Sep, 2026 - 28 Sep, 2026"
+1789924237,1wlmotm,18,0,"Hi,
+
+  
+I am in the search of beta testers, for my MLOps platform I built. On my platform, users are able to create ML models with just a prompt and a dataset, which are then hosted automatically.
+
+So basically: prompt + dataset ➡️ hosted model accessible via rest.
+
+Depending on the size of the dataset and the model, it only takes about 60 seconds.
+
+So no handling of mlops stuff required. If you are interested, just write me a dm so i will send you the platform link.",datascience,Beta Testers Wanted!
+1789914589,1wlikgm,1,1,[removed],datascience,"we made a 27b model for creative writing. performs as good as claude fable 5, at a 40x cheaper price, open weights."
+1789776114,1wk6pcy,32,78,"I’ve been listening to more podcasts to really grow as a data professional. My favorites are The AI Table, which I like for its chats with major Chief Data & AI and Joe Reis. Curious what podcasts others enjoy?",datascience,What are your favorite data and AI podcasts?
+1789749645,1wjvb0h,1,0,,datascience,Charouel Rays: Geometric Time-Series Detection for Space-Weather Transitions
+1789746745,1wjtzew,47,87,"Getting a little bored in my current role where I’ve been for a few years (work at a large financial institution). Role feels very stable even with AI disruption, have access to many of the tools although for my specific job they’re not as helpful outside of research.
+
+I’m able to do all my work quickly and efficiently, don’t have any career growth opportunities as I’ve topped out the IC track here but my raises every year have beaten inflation as I’ve performed pretty well. 
+
+Those who have changed roles, how has it gone for you? Interested in hearing from folks who’ve moved into the tech industry specifically. 
+
+I figure it’ll take me a year+ to find a new job that I want more than my current one given the market and difficulty others have described. ",datascience,"Those who have gotten a new job in the last 6 months - 1 year, how’s it going?"
+1789723287,1wjlbqr,0,1,,datascience,"Lock authenticated https://media2.dev.to/dynamic/image/width=1280,height=720,fit=cover,gravity=auto,format=auto/https%3A%2F%2Fdev-to-uploads.s3.amazonaws.com%2Fuploads%2Farticles%2Fwvxys08ydyvjkuivjlqt.png"
+1789707397,1wjgrzs,1,1,[removed],datascience,The Invisible Middle: Why We’re Building Patient State for Care Teams
+1789661449,1wiyb2b,0,15,,datascience,"Survey statistics, and why ANOVA got subsumed by hierarchical models"
+1789649979,1witbtj,2,0,"I think what a lot of people get wrong when trying to use AI for analytics is focusing too much on the tools and which LLMs they should use, and not enough on the fundamentals.  
+  
+I've now been building AI workflows in production for almost 2 years, and the most important lesson I've learned is: You have to think of it as a system  
+  
+At a high level, this is the pattern I've seen work in agentic analytics systems:
+
+* The assistant itself (the reasoning layer)
+* A connection to your real data (this is where MCP usually helps)
+* A semantic layer, so it knows what your metrics actually mean and doesn't invent definitions
+
+Now, you 100% need solid data modeling underneath before you slap a semantic layer on top (ideally an information model), but that tends to be out of our control as data scientists.
+
+Beyond the main ""ingredients"", you need data governance, guardrails, and evals.
+
+A couple of friends and I are doing a free live workshop series on this exact topic starting next week, here the link if you want to join: [https://futureproofds.com/ai](https://futureproofds.com/ai)
+
+One of them is a data scientist turned AI engineer, so he'll be able to provide an additional perspective beyond what dominates conversations in the data science space.
+
+I hope you find it useful",datascience,building an AI analysts the right way starts with the fundamentals (free live workshops)
+1789585464,1wi6isq,4,45,"A data scientist on my team wasted a good bit of compute on this problem without actually realizing it was a problem. 
+
+Pytorch and tensorflow both silently broadcast the output of your model when the target shape mismatches, causing hard to diagnose issues. It still exists a ton in the wild, so I thought I'd actually highlight the symptoms of a silent broadcasting bug to keep people in the know.
+
+[https://towardsdatascience.com/silent-broadcasting-can-ruin-your-model/](https://towardsdatascience.com/silent-broadcasting-can-ruin-your-model/) 
+
+Let me know what you think",datascience,Silent broadcasting is still a big problem and could be derailing your work right now
+1789562467,1whw4bv,1,1,[removed],datascience,"One keyword, three sources, one API call: how I track trend divergence across Amazon, TikTok, and Google"
+1789538701,1whosf6,1,1,,datascience,"Resigned after 1 month due to role mismatch + brutal commute — now company is holding my salary over a ""bond"""
+1789489513,1wh53ky,1,13,,datascience,Parametric models vs empirical distributions and ordinal regression
+1789488454,1wh4mrk,3,22,"Prior Labs just released their latest tabular foundation model, TabPFN-3.5. 
+
+The model is top of both TabArena and BeyondArena. The model family comes with: 
+
+\- TabPFN-3.5-Fast (in alpha): This one goes 6x faster than the base model 
+
+\- TabPFN-3.5-Thinking: you basically exchange compute for better accuracy with this one and it's via the API 
+
+\- TabPFN-3.5-Plus 
+
+On BeyondArena, TabPFN-3.5 leads on text-rich, high-cardinality and high-dimensional data, with +250 Elo points over the strongest previous baseline and +150 Elo points ahead of the previous overall leader. TabPFN-3.5-Thinking is +20 Elo on the base model in BeyondArena and +44 Elo on TabArena.
+
+The repo for TabPFN open-source is here: [https://github.com/PriorLabs/tabpfn](https://github.com/PriorLabs/tabpfn); and model report is here: [https://priorlabs.ai/technical-reports/tabpfn-3-5](https://priorlabs.ai/technical-reports/tabpfn-3-5)",datascience,TabPFN-3.5 is released today and SOTA for 1M rows and up to 20k features
+1789419690,1wgg03v,10,19,"So many of the youtube videos, courses, advice, etc., online feels its geared towards running singular projects. How to clean up data in a Excelspreadsheet for a onetime project, for example, but what about when its for an analysis you have to keep running over and over? Or when it's an analysis that is repeated across several teams in slightly different ways?
+
+I need advice about managing data for an organization. Advice about
+
+* how to communicate with stakeholders about data without getting overly detailed
+* requirements gathering across teams with confusing/vague needs
+* dealing with a system that's built on workarounds after workarounds
+* best practices documenting analytics/dashboards that are being shared publicly (word doc, slide deck, notion page?)
+* dealing with a domain that is overly complicated and can't be captured well with data.
+* dealing with execs who've already decided the answer they want and need you to make the data match their answer (and what to do when the data absolutely doesn't support it)
+
+These are some of my most pressing problems at work but neither my formal education nor the resources I can find online really cover this. I'd love some sort of bootcamp for organizational datamanagement/project management",datascience,"Advice and professional development online feels like its geared towards one-time ad-hoc projects. Any resources on managing data on a recurring, organizational basis?"
+1789403251,1wg8855,3,26,,datascience,Using fake-data simulation to see what a study can actually detect
+1789375806,1wfxzgg,1,15,"Hello all,
+
+I'm a radar signal processing engineer and i trained a 5-class classifier (car, large\_vehicle, two\_wheeler, pedestrian, pedestrian\_group) on RadarScenes radar point clouds.
+
+The input vector is a per-scan histogram (16 bins) and the network is a 3-layer MLP. The loss function is a class-weighted cross-entropy loss. This work is based on ""Histogram-based Deep Learning for Automotive Radar"" paper.
+
+I scoped the project to be one scan only. Accumulation of multiple scans is the next step.
+
+Data
+
+Class Imbalance: two-wheelers and large\_vehicles has a low number of occurences.
+
+Aggregated Classes: two\_wheeler mixes bicycles and motorized variants; large\_vehicle merges trucks, buses, and trains together due to data scarcity.
+
+Sequence Bias: Long tracks of slow-moving objects can skew a particular data split velocity distribution, causing high F1 score variance across folds.
+
+Ablation studies
+
+I tried with bigger MLPs, alternative feature encodings, and different histogram binning, all moved performance less than the variation caused by changing the train/validation/test split. I measured that split sensitivity across 6 folds, keeping the same proportions.
+
+Changing the histogram to per-instance statistics (mean/median/std) slightly degraded performance.
+
+Main findings
+
+Macro F1 rises from 0.381 to 0.764 as the naturally occurring number of radar detections per instance increases from 1 to 5. I trained the model normally using all available detections, then bucketed its existing validation predictions by each instance's detection count and computed macro F1 per bucket.
+
+The classes car and pedestrian has the best performance and two\_wheeler has the worst.
+
+A car is often confused as large vehicle when the car was wider than usual or had a unusually high rcs (which can happen due to multipath for example).
+
+The two\_wheeler is often confused as pedestrian because their vr\_compensated distributions overlap, which is the the model's single most important feature for these two classes. A stationary or idling two\_wheeler is indistinguishable from a pedestrian.
+
+I uploaded an image with ground truth vs predictions: A nearly stationary two-wheeler which contains a single point was predicted as pedestrian, because its velocity is near zero, indistinguishable from a pedestrian. A car in the same scene, also with just one point, is classified correctly, since RCS and Doppler are enough for that class.
+
+Full writeup here: [https://github.com/brunopinto900/radar-ml-autonomous-driving/blob/main/MLP\_Report.md](https://github.com/brunopinto900/radar-ml-autonomous-driving/blob/main/MLP_Report.md)
+
+Future work
+
+Implement other spatial encoding schemas (point net for example) and accumulate multiple scans to tackle the challenge of sparsity and explore the concept of micro-doppler.",datascience,Radar point cloud object classification
+1789375618,1wfxxov,0,1,,datascience,Automotive Radar Object Classification
+1789358474,1wfsve7,1,6," 
+
+Welcome to this week's entering & transitioning thread! This thread is for any questions about getting started, studying, or transitioning into the data science field. Topics include:
+
+* Learning resources (e.g. books, tutorials, videos)
+* Traditional education (e.g. schools, degrees, electives)
+* Alternative education (e.g. online courses, bootcamps)
+* Job search questions (e.g. resumes, applying, career prospects)
+* Elementary questions (e.g. where to start, what next)
+
+While you wait for answers from the community, check out the [FAQ](https://www.reddit.com/r/datascience/wiki/frequently-asked-questions) and Resources pages on our wiki. You can also search for answers in [past weekly threads](https://www.reddit.com/r/datascience/search?q=weekly%20thread&restrict_sr=1&sort=new).",datascience,"Weekly Entering & Transitioning - Thread 14 Sep, 2026 - 21 Sep, 2026"
+1789322192,1wfenu9,1,1,[removed],datascience,Chat bot frustrations
+1789257118,1wes3v5,1,1,,datascience,Can I please get advice on whether I should seek higher education (BEGGING FOR INSIGHT)
+1789191386,1we3wn0,0,1,[removed],datascience,What makes a data science model actually useful in production?
+1789153004,1wdp9t0,4,11,"Hello all,
+
+  
+I am working on a object classification with a automotive radar point clouds. I compared many models and feature vectors. 
+
+Once i used range as feature, all models scored higher f1 in all K validation sets and on the final test set.
+
+One particular artifact of a radar, is that as the farther the object is the less number of points it returns to the radar. Although the performance improved and there is no overfit in the classical sense, i am afraid my model is learning the environment not the class distribuiton and even worse, its learning that big range means big object. 
+
+  
+How can i stress test this claim? Should i try to split the data sets so range distribution differs? Or not even using the feature at all and accept lower performance?
+
+Would appreciate your insights.
+
+Thank you.
+
+  
+",datascience,How to handle cofound variables?
+1789142927,1wdkkcv,1,1,[removed],datascience,Spent months building a no-code data prep/ML tool — curious if the core idea actually matters to you
+1789107452,1wd8117,0,1,[removed],datascience,"The AI vs. Reality Gap: Are we actually building AI products, or just cleaning data 80% of the time?"
+1789105820,1wd7j7x,1,2,,datascience,"Are CAISO nodal spreads actually predictable, or am I approaching this wrong?"
+1789062041,1wcq3x6,1,1,[removed],datascience,How do you make LLM-generated clusters actually interpretable instead of just vibes-based?
+1789018953,1wca6w7,1,1,,datascience,Is AI more dangerous than the Nuclear Arms Race?
+1788986796,1wbxtm6,12,14,"I am working on a predictive model for parts replacement on machines. I've evaluated CoxPH, CoxTV, Random Forest, XGBoost, and Logistic Regression. Modeling is fine but I'm being asked to provide a model that can give us an output of ""we need to schedule a technician for X month.""
+
+As with any equipment failure and/or parts replacement model, these events are recurrent. It's not like the risk of death or contracting a terminal disease. Once a part is replaced, the event can (and will) happen again. So I've been doing fine with the *hazard* part of this, but my PM wants more of a ""when will it happen?"" answer.
+
+I've been in data engineering moreso lately than data science. I'm a little rusty on all the models I could try. Any suggestions? I'm using Python, so R-only is a no-go.",datascience,Which survival/TTE model that can answer my non-technical PM?
+1788953388,1wbiy5p,34,7,,datascience,Should I make the move from data science to product owner
+1788920002,1wb8k6w,1,1,[removed],datascience,What actually made you employable for your first serious ML/Data role?
+1788883829,1wasr52,2,26,,datascience,An R package for imputing US Census data using iterative proportional fitting on available margins
+1788879133,1waqln2,1,1,[removed],datascience,Sistema automatizado de trade com metatrader 5.
+1788811193,1wa2q0p,1,1,,datascience,Wolverine Trading Data Scientist OA
+1788797820,1w9wlek,5,14,"I need to get up to speed on LangGraph within a couple of days. Not enough to say I'm an expert in it or be able to flub that I've shipped on it, but just enough to be able to competently say I understand the concepts and how it works. Maybe be able to elaborate on how I would have used it in the past (my last gig was AI development intensive but was all hand rolled on the Anthropic API).   
+  
+I was hoping some folks here could direct me to some resources where I could invest three hours or so and get a nice deep dive on the subject. Youtube videos, tutorials, that sort of thing. 
+
+  
+TIA!",datascience,Can anyone suggest a comprehensive intro to LangGraph?
